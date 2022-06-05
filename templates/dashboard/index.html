@@ -1,0 +1,281 @@
+{% extends 'partials/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row mt-3 pt-3">
+    <div class="col-md-4">
+        <div class="border p-3 shadow">
+            <h4>Add Data</h4>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class="btn btn-success btn-block" type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <canvas id="myChart1" width="400" height="300"></canvas>
+        <script>
+            var ctx = document.getElementById('myChart1').getContext('2d');
+            var myChart1 = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [{% for data in data %} '{{ data.brand }}', {% endfor %}],
+            datasets: [{
+                label: '# of Votes',
+                data: [{% for data in data %} {{ data.rise }}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                        borderWidth: 1
+            }]
+                },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+            });
+        </script>
+    </div>
+    <div class="col-md-12 pt-5 pb-2 text-center">
+        <h4>Пятерка лидирующих вендоров мирового рынка ноутбуков 2021</h4>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="active">
+                    <th>Компания</th>
+                    <th>2021, млн штук</th>
+                    <th>2021, % рынка</th>
+                    <th>2020, млн штук</th>
+                    <th>2020, % рынка</th>
+                    <th>Квартальный прирост, год к году</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lenovo</td>
+                    <td>16,3</td>
+                    <td>23,9%</td>
+                    <td>8,9</td>
+                    <td>23,5%</td>
+                    <td>84%</td>
+                </tr>
+                <tr>
+                    <td>HP</td>
+                    <td>15,4</td>
+                    <td>22,6%</td>
+                    <td>8,1</td>
+                    <td>21,3%</td>
+                    <td>91%</td>
+                </tr>
+                <tr>
+                    <td>Dell</td>
+                    <td>10</td>
+                    <td>14,6%</td>
+                    <td>7,3</td>
+                    <td>19,2%</td>
+                    <td>37%</td>
+                </tr>
+                <tr>
+                    <td>Apple</td>
+                    <td>5,7</td>
+                    <td>8,4%</td>
+                    <td>2,9</td>
+                    <td>7,8%</td>
+                    <td>94%</td>
+                </tr>
+                <tr>
+                    <td>Acer</td>
+                    <td>4,9</td>
+                    <td>7,2%</td>
+                    <td>2,5</td>
+                    <td>6,7%</td>
+                    <td>94%</td>
+                </tr>
+                <tr>
+                    <td>Остальные</td>
+                    <td>15,8</td>
+                    <td>23,2%</td>
+                    <td>8,1</td>
+                    <td>21,4%</td>
+                    <td>96%</td>
+                </tr>
+                <tr>
+                    <td>Всего</td>
+                    <td>68,2</td>
+                    <td>100,0%</td>
+                    <td>37,8</td>
+                    <td>100,0%</td>
+                    <td>81%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 pt-5 pb-2 text-center">
+        <h4>Ноутбуки</h4>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="active">
+                    <th>Ноутбук</th>
+                    <th>Модель</th>
+                    <th>Магазин</th>
+                    <th>Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="//static.shop.kz/upload/resize_cache/iblock/d9d/450_450_1/159769x1.JPG" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-asus-vivobook-m513ua-oled-90nb0tp1-m06450/">ASUS VivoBook M513UA, OLED (90NB0TP1-M06450)</a><br>
+                        <p>Процессор: AMD Ryzen 5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 256 ГБ SSD<br>Интегрированная в процессор графика: AMD Radeon Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>360 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://www.technodom.kz/_next/image?url=https%3A%2F%2Fapi.technodom.kz%2Ff3%2Fapi%2Fv1%2Fimages%2F800%2F800%2F256475_1.jpg&w=3840&q=85" width="200" height="200"></td>
+                    <td><a href="https://www.technodom.kz/astana/p/noutbuk-asus-vivobook-m513ua-ryzen-5-5500u-8gb-256475">Asus VivoBook M513UA Ryzen 5</a>
+                        <p>Процессор: AMD Ryzen 5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 256 ГБ SSD<br>Интегрированное графическое ядро: AMD Radeon Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Technodom</td>
+                    <th>375 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://alser.kz/products/noutbuki-ucheba-rabota-dom//m9jpDU9DB/noutbuk-asus-vivobook-m513ua-l1405w-156fhd-oled-amd-ryzen-5-5500u8gbssd-256gbamd-radeon-graphicswin11office365indie-black90nb0tp1-m06450-520x325.jpg" width="260" height="170"></td>
+                    <td><a href="https://alser.kz/p/noutbuk-asus-vivobook-m513ua-l1405w-156fhd-oled-amd-ryzen-5-5500u8gbssd-256gbamd-radeon-graphicswin11office365indie-black90nb0tp1-m06450">Asus Vivobook M513UA-L1405W 15.6FHD OLED</a>
+                        <p>Процессор: AMD Ryzen 5<br>Количество ядер: 6<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 256 ГБ SSD<br>Интегрированное графическое ядро: AMD Radeon Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD OLED</p>
+                    </td>
+                    <td>Alser</td>
+                    <th>350 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://shop.kz/upload/iblock/67c/152415_1.jpg" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-apple-macbook-pro-a2251-s-displeem-retina-mwp52/">Apple MacBook Pro A2251 с дисплеем Retina (MWP52)</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 16 ГБ<br>Твердотельный накопитель: 1 ТБ SSD<br>Интегрированная в процессор графика: Intel Iris Plus<br>Диагональ экрана, дюйм: 13.3<br>Разрешение экрана: 2560 x 1600 WQXGA</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>1 000 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://object.pscloud.io/cms/cms/Photo/img_0_62_1839_0_320.webp" width="200" height="200"></td>
+                    <td><a href="https://www.sulpak.kz/g/noutbuk_apple_macbook_pro_13_2020_space_grey_i5161tsux_mwp52_62_1839/nur_sultan">Apple MacBook Pro 13 2020 (MWP52)</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 16 ГБ<br>Твердотельный накопитель: 1 ТБ SSD<br>Интегрированная в процессор графика: Intel Iris Plus<br>Диагональ экрана, дюйм: 13.3<br>Разрешение экрана: 2560 x 1600 WQXGA</p>
+                    </td>
+                    <td>Sulpak</td>
+                    <th>1 000 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://static.shop.kz/upload/resize_cache/iblock/c6c/450_450_1/158068_01.jpg" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-lenovo-ideapad-3-81wq005ark/">Lenovo Ideapad 3 (81WQ005ARK)</a>
+                        <p>Процессор: Intel Celeron<br>Объем оперативной памяти: 4 ГБ<br>Жесткий диск: 1 ТБ HDD<br>Интегрированная в процессор графика: Intel UHD Graphics 600<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>170 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://object.pscloud.io/cms/cms/Photo/img_0_62_1913_0_6_320.webp" width="200" height="200"></td>
+                    <td><a href="https://www.sulpak.kz/g/noutbuk_lenovo_ideapad_3_i381tmw_lenpn3_62_1913/nur_sultan">Lenovo Ideapad 3 I381TMW (81WE00Q7RK)</a>
+                        <p>Процессор: Intel Core i3<br>Объем оперативной памяти: 8 ГБ<br>Жесткий диск: 1 ТБ HDD<br>Интегрированная в процессор графика: nVidia GeForce MX<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Sulpak</td>
+                    <th>280 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://www.mechta.kz/export/1cbitrix/import_files/89/89b214fb-5fae-11eb-a23a-005056b6dbd7-1024.webp" width="200" height="200"></td>
+                    <td><a href="https://www.mechta.kz/product/noutbuk-lenovo-ideapad-3-15igl05-81wq000jrk-156-hdceleron-n4120-11-ghz41tbdos/?setcity=s1">Lenovo IdeaPad 3 15IGL05 (81WQ000JRK) </a>
+                        <p>Процессор: Intel Celeron N4120<br>Объем оперативной памяти: 4 ГБ<br>Жесткий диск: 1 ТБ HDD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1366х768 HD</p>
+                    </td>
+                    <td>Мечта</td>
+                    <th>135 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://static.shop.kz/upload/resize_cache/iblock/e2f/450_450_1/160435_01.jpg" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-hp-omen-17-ck0017ur-4a808ea/">HP Omen 17-ck0017ur (4A808EA)</a>
+                        <p>Процессор: Intel Core i7<br>Объем оперативной памяти: 32 ГБ<br>Твердотельный накопитель: 1 ТБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 17.3<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>-</th>
+                </tr>
+                <tr>
+                    <td><img src="https://static.apltech.kz/uploads/products/4/12131/558c147d839db122afca76a4be44c84d@500.jpg" width="200" height="200"></td>
+                    <td><a href="https://www.apltech.kz/tovar/12131/hp-omen-17-an051ur-2hp09ea">HP Omen 17-an051ur 2HP09EA</a>
+                        <p>Процессор: Intel Core i7<br>Объем оперативной памяти: 16 ГБ<br>Твердотельный накопитель: 1 ТБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 17.3<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Apltech</td>
+                    <th>535 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://www.mechta.kz/export/1cbitrix/import_files/ca/ca6a38e5-039b-11eb-a231-005056b6dbd7-1024.webp" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-dell-xps-15-9500-4692/">DELL XPS 15 (9500-4692)</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1200 WUXGA</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>845 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://www.mechta.kz/export/1cbitrix/import_files/ca/ca6a38e5-039b-11eb-a231-005056b6dbd7-1024.webp" width="200" height="200"></td>
+                    <td><a href="https://alfa.kz/pc/notebooks/noutbuk/dell/xps_15_9500/7187208">DELL XPS 15 9500</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1200 WUXGA</p>
+                    </td>
+                    <td>Alfa</td>
+                    <th>845 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://www.mechta.kz/export/1cbitrix/import_files/ca/ca6a38e5-039b-11eb-a231-005056b6dbd7-1024.webp" width="200" height="200"></td>
+                    <td><a href="https://www.mechta.kz/product/noutbuk-dell-xps-15-9500-210-avqg-156-fhdcore-i5-10300h-25-ghz8ssd512win10/">DELL XPS 15 (9500)</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1200 WUXGA</p>
+                    </td>
+                    <td>Mechta</td>
+                    <th>900 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://static.shop.kz/upload/resize_cache/iblock/e06/450_450_1/160272_01.jpg" width="200" height="200"></td>
+                    <td><a href="https://shop.kz/offer/noutbuk-acer-nitro-5-an515-55-nh-q7mer-006/">Acer Nitro 5 AN515-55</a>
+                        <p>Процессор: Intel Core i7<br>Объем оперативной памяти: 16 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1200 WUXGA</p>
+                    </td>
+                    <td>Белый ветер</td>
+                    <th>520 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://object.pscloud.io/cms/cms/Photo/img_0_62_2360_0_1_320.webp" width="200" height="200"></td>
+                    <td><a href="https://www.sulpak.kz/g/noutbuk_acer_nitro_5_an515_55_nh_qb0er_005/nur_sultan">HP Omen 17-an051ur 2HP09EA</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 16 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Видиеоадаптер: nVidia GeForce RTX<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Sulpak</td>
+                    <th>640 000</th>
+                </tr>
+                <tr>
+                    <td><img src="https://al-fullsize.object.pscloud.io/files/alfa/messages/1/2/3/2/4/12324430-Acer_Nitro_5__AN515-52_.jpg" width="250" height="180"></td>
+                    <td><a href="https://alfa.kz/pc/notebooks/noutbuk/acer/nitro_5__an515_55_/7546316">Acer Nitro 5 (AN515-55)</a>
+                        <p>Процессор: Intel Core i5<br>Объем оперативной памяти: 8 ГБ<br>Твердотельный накопитель: 512 ГБ SSD<br>Интегрированная в процессор графика: Intel UHD Graphics<br>Диагональ экрана, дюйм: 15.6<br>Разрешение экрана: 1920 x 1080 Full HD</p>
+                    </td>
+                    <td>Alfa</td>
+                    <th>400 000</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
